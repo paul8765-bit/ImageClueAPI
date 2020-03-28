@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PairAndImagesLibrary": {
+      "commandName": "Project",
+      "commandLineArgs": "Paul Emily Chris Ben Wallace Winnie Alex Greenwood"
+    }
+  }
+}
