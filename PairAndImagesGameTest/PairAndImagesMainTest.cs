@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PairAndImagesLibrary;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PairAndImagesGameTest
 {
@@ -13,9 +12,9 @@ namespace PairAndImagesGameTest
         {
             string adjectivesFilePath = "Adjectives.txt";
             List<string> adjectives = PairAndImagesLibraryMain.ReadAllLinesFromFile(adjectivesFilePath);
-            Assert.AreEqual(2, adjectives.Count);
-            Assert.AreEqual("Itchy", adjectives[0]);
-            Assert.AreEqual("Horny", adjectives[1]);
+            Assert.IsTrue(adjectives.Count > 10);
+            Assert.AreEqual("itchy", adjectives[0]);
+            Assert.AreEqual("horny", adjectives[1]);
         }
 
         [TestMethod]
@@ -23,10 +22,10 @@ namespace PairAndImagesGameTest
         {
             string nounsFilePath = "Nouns.txt";
             List<string> nouns = PairAndImagesLibraryMain.ReadAllLinesFromFile(nounsFilePath);
-            Assert.AreEqual(3, nouns.Count);
-            Assert.AreEqual("Cat", nouns[0]);
-            Assert.AreEqual("Lemon", nouns[1]);
-            Assert.AreEqual("Gourd", nouns[2]);
+            Assert.IsTrue(nouns.Count > 10);
+            Assert.AreEqual("cat", nouns[0]);
+            Assert.AreEqual("lemon", nouns[1]);
+            Assert.AreEqual("gourd", nouns[2]);
         }
 
         [TestMethod]
@@ -73,21 +72,32 @@ namespace PairAndImagesGameTest
         public void TestGetCluesSmallTeam()
         {
             List<List<string>> teams = GetSmallTeam();
-            List<string> clues = PairAndImagesLibraryMain.GetClues(teams);
+            List<Clue> clues = PairAndImagesLibraryMain.GetClues(teams);
             Assert.AreEqual(2, teams.Count);
             Assert.AreEqual(2, clues.Count);
 
             // Assert that the sentence ends with the same noun
-            string clueForFirstTeam = clues[0];
-            string nounForFirstTeam = clueForFirstTeam.Split(" ").Last();
-            string clueForSecondTeam = clues[1];
-            string nounForSecondTeam = clueForSecondTeam.Split(" ").Last();
+            Assert.AreEqual(clues[0].Noun, clues[1].Noun);
 
-            Assert.AreEqual(nounForFirstTeam, nounForSecondTeam);
+            // Assert that the adjectives are different
+            Assert.AreNotEqual(clues[0].Adjective, clues[1].Adjective);
+        }
 
-            string adjectiveForFirstTeam = clueForFirstTeam.Split(" ")[clueForFirstTeam.Split(" ").Count() - 2];
-            string adjectiveForSecondTeam = clueForSecondTeam.Split(" ")[clueForSecondTeam.Split(" ").Count() - 2];
-            Assert.AreNotEqual(adjectiveForFirstTeam, adjectiveForSecondTeam);
+        [TestMethod]
+        public void TestGetCluesMediumTeam()
+        {
+            List<List<string>> teams = GetMediumTeam();
+            List<Clue> clues = PairAndImagesLibraryMain.GetClues(teams);
+            Assert.AreEqual(3, teams.Count);
+            Assert.AreEqual(3, clues.Count);
+
+            // Assert that the sentence ends with the same noun
+            Assert.AreEqual(clues[0].Noun, clues[1].Noun);
+            Assert.AreEqual(clues[0].Noun, clues[2].Noun);
+
+            // Assert that the adjectives are different
+            Assert.AreNotEqual(clues[0].Adjective, clues[1].Adjective);
+            Assert.AreNotEqual(clues[0].Adjective, clues[2].Adjective);
         }
 
         private List<List<string>> GetSmallTeam()

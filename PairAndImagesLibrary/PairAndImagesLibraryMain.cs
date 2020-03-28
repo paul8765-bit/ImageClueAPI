@@ -46,15 +46,15 @@ namespace PairAndImagesLibrary
             return teams;
         }
 
-        public static List<string> GetClues(List<List<string>> teams)
+        public static List<Clue> GetClues(List<List<string>> teams)
         {
             string sharedNoun = GetRandomNoun();
             List<string> adjectivePerTeam = GetAdjectivePerTeam(teams.Count);
 
-            List<string> clueForEachTeam = new List<string>();
+            List<Clue> clueForEachTeam = new List<Clue>();
             for (int teamIndex = 0; teamIndex < teams.Count; teamIndex++)
             {
-                clueForEachTeam.Add(string.Format("Draw a {0} {1}", adjectivePerTeam[teamIndex], sharedNoun));
+                clueForEachTeam.Add(new Clue(adjectivePerTeam[teamIndex], sharedNoun));
             }
             return clueForEachTeam;
         }
