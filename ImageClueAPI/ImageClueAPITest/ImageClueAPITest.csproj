@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PairAndImagesLibrary\PairAndImagesLibrary.csproj" />
+    <ProjectReference Include="..\ImageClueAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,13 +24,13 @@
     <None Update="Nouns.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Players3.txt">
+    <None Update="Players1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Players2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Players1.txt">
+    <None Update="Players3.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

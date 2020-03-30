@@ -8,12 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <Compile Remove="ImageClueAPITest\**" />
+    <Content Remove="ImageClueAPITest\**" />
+    <EmbeddedResource Remove="ImageClueAPITest\**" />
+    <None Remove="ImageClueAPITest\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PairAndImagesLibrary\PairAndImagesLibrary.csproj" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>

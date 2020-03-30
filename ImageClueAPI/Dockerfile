@@ -8,13 +8,16 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["ImageClueAPI.csproj", ""]
-RUN dotnet restore "./ImageClueAPI.csproj"
+RUN dotnet restore ImageClueAPI.csproj
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "ImageClueAPI.csproj" -c Release -o /app/build
+RUN dotnet build ImageClueAPI.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ImageClueAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish ImageClueAPI.csproj -c Release -o /app/publish
+
+# Run unit tests
+RUN dotnet test --verbosity normal
 
 FROM base AS final
 WORKDIR /app

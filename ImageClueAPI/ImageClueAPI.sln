@@ -5,11 +5,7 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClueAPI", "ImageClueAPI.csproj", "{F55656AE-F9DA-447E-9730-3420677B646F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PairAndImagesLibrary", "..\PairAndImagesLibrary\PairAndImagesLibrary.csproj", "{9F59C67A-4F80-43CA-B33F-4D8B19F857CF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PairAndImagesGameTest", "..\PairAndImagesGameTest\PairAndImagesGameTest.csproj", "{D16E8DA2-1B2A-4613-A6B1-D651C829B709}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClueAPITest", "..\ImageClueAPITest\ImageClueAPITest.csproj", "{F3F256B6-3A35-4BD8-8E70-3140C3CC433A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageClueAPITest", "ImageClueAPITest\ImageClueAPITest.csproj", "{F4EA653F-C669-4FE2-852B-B9B6B46EF384}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +17,10 @@ Global
 		{F55656AE-F9DA-447E-9730-3420677B646F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F55656AE-F9DA-447E-9730-3420677B646F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F55656AE-F9DA-447E-9730-3420677B646F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F59C67A-4F80-43CA-B33F-4D8B19F857CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F59C67A-4F80-43CA-B33F-4D8B19F857CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F59C67A-4F80-43CA-B33F-4D8B19F857CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F59C67A-4F80-43CA-B33F-4D8B19F857CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D16E8DA2-1B2A-4613-A6B1-D651C829B709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D16E8DA2-1B2A-4613-A6B1-D651C829B709}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D16E8DA2-1B2A-4613-A6B1-D651C829B709}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D16E8DA2-1B2A-4613-A6B1-D651C829B709}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3F256B6-3A35-4BD8-8E70-3140C3CC433A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3F256B6-3A35-4BD8-8E70-3140C3CC433A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3F256B6-3A35-4BD8-8E70-3140C3CC433A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3F256B6-3A35-4BD8-8E70-3140C3CC433A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4EA653F-C669-4FE2-852B-B9B6B46EF384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4EA653F-C669-4FE2-852B-B9B6B46EF384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4EA653F-C669-4FE2-852B-B9B6B46EF384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EA653F-C669-4FE2-852B-B9B6B46EF384}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
