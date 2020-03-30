@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Image Clue UI", "Image Clue UI.njsproj", "{EDF70C74-450A-446A-A2C3-BA8964C17E83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF70C74-450A-446A-A2C3-BA8964C17E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF70C74-450A-446A-A2C3-BA8964C17E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF70C74-450A-446A-A2C3-BA8964C17E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF70C74-450A-446A-A2C3-BA8964C17E83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE437C77-F28C-46A9-AA86-1B3F29FB2C8C}
+	EndGlobalSection
+EndGlobal
