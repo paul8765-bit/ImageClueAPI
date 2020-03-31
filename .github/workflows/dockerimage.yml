@@ -11,6 +11,7 @@ jobs:
           uses: actions/checkout@v2
           
         - name: Build the Docker image
+          run: cd ImageClueAPI
           run: docker build . --file Dockerfile --tag imageclueapi:latest
         
         - name: Publish to Docker Repository
