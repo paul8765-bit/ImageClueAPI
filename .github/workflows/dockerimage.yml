@@ -17,6 +17,7 @@ jobs:
         
         - name: Publish to Docker Repository
           uses: elgohr/Publish-Docker-Github-Action@master
+          run: cd ImageClueAPI
           with:
             name: pauldickson8765/imageclueapi
             username: ${{ secrets.DOCKER_USERNAME }}
