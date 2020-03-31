@@ -1,0 +1,21 @@
+name: Build, test, push to Docker repo
+
+on: [push]
+
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout the latest image 
+          uses: actions/checkout@v2
+          
+        - name: Build the Docker image
+          run: docker build . --file Dockerfile --tag imageclueapi:latest
+        
+        - name: Publish to Docker Repository
+          uses: elgohr/Publish-Docker-Github-Action@master
+          with:
+            name: pauldickson8765/imageclueapi
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
