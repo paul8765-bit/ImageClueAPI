@@ -6,19 +6,15 @@ jobs:
   build:
     name: Build Job
     runs-on: ubuntu-latest
-    env:
-        working-directory: ./ImageClueAPI
     steps:
         - name: Checkout the latest image 
           uses: actions/checkout@v2
           
         - name: Build the Docker image
           run: docker build . --file Dockerfile --tag imageclueapi:latest
-          working-directory: ${{env.working-directory}}
         
         - name: Publish to Docker Repository
           uses: elgohr/Publish-Docker-Github-Action@master
-          working-directory: ${{env.working-directory}}
           with:
             name: pauldickson8765/imageclueapi
             username: ${{ secrets.DOCKER_USERNAME }}
