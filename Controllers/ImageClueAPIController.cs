@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ namespace ImageClueAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("AllowAllHeaders")]
     public class ImageClueAPIController : ControllerBase
     {
         private readonly ILogger<ImageClueAPIController> _logger;
