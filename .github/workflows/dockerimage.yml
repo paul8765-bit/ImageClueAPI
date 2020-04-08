@@ -42,7 +42,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: 180096676374.dkr.ecr.us-east-1.amazonaws.com/imageclueapi
+        ECR_REPOSITORY: imageclueapi
         IMAGE_TAG: imageclueapi:latest
       run: |
         # Build a docker container and
