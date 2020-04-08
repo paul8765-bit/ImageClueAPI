@@ -24,7 +24,7 @@
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
-      "memory": 250,
+      "memory": 75,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
@@ -69,7 +69,7 @@
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
-      "memory": 250,
+      "memory": 75,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
@@ -94,7 +94,7 @@
     }
   ],
   "placementConstraints": [],
-  "memory": "500",
+  "memory": "150",
   "taskRoleArn": "arn:aws:iam::180096676374:role/ecsTaskExecutionRole",
   "compatibilities": [
     "EC2"
