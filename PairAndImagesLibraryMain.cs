@@ -79,6 +79,30 @@ namespace PairAndImagesLibrary
             return uniqueAdjectives.ToList();
         }
 
+        public static bool SendSMS(List<List<string>> teams, List<Clue> cluesList)
+        {
+            // check list of teams and clues is the same length
+            // for each team/clue
+            // for each team member in that team
+            // send an SMS containing the clue, using Twillo API
+            return false;
+        }
+
+        public static void CheckTeamsAndCluesLength(int teamsCount, int cluesCount)
+        {
+            if (teamsCount != cluesCount)
+            {
+                throw new Exception(string.Format(
+                    "Expected teamsCount and cluesCount to be equal. Instead teamsCount={0} and cluesCount={1}", 
+                    teamsCount, cluesCount));
+            }
+        }
+
+        private static bool SendTwilioSMS(List<string> teamMemebers, string clue)
+        {
+            return false;
+        }
+
         private static string GetRandomNoun()
         {
             List<string> allNouns = ReadAllLinesFromFile("Nouns.txt");

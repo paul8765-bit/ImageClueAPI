@@ -35,5 +35,15 @@ namespace ImageClueAPITest
             Assert.IsTrue(clues[0].Noun == clues[1].Noun);
             Assert.IsTrue(clues[0].Adjective != clues[1].Adjective);
         }
+
+        [TestMethod]
+        public void TestSendSMS()
+        {
+            string teamJson = "[[\"paul\",\"emily\"],[\"chris\",\"ben\"]]";
+            string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"},{\"Adjective\":\"confused\",\"Noun\":\"French chef\"}]";
+            ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson, cluesJson);
+            bool outcome = JsonConvert.DeserializeObject<bool>(result.Value);
+            Assert.IsTrue(outcome);
+        }
     }
 }

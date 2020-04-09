@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PairAndImagesLibrary;
+using System;
 using System.Collections.Generic;
 
 namespace PairAndImagesGameTest
@@ -98,6 +99,31 @@ namespace PairAndImagesGameTest
             // Assert that the adjectives are different
             Assert.AreNotEqual(clues[0].Adjective, clues[1].Adjective);
             Assert.AreNotEqual(clues[0].Adjective, clues[2].Adjective);
+        }
+
+        [TestMethod]
+        public void TestCheckTeamsAndCluesLengthSuccess()
+        {
+            PairAndImagesLibraryMain.CheckTeamsAndCluesLength(3, 3);
+            // Not expecting an exception here so this is success
+        }
+
+        [TestMethod]
+        public void TestCheckTeamsAndCluesLengthFailure()
+        {
+            try
+            {
+                PairAndImagesLibraryMain.CheckTeamsAndCluesLength(3, 2);
+            }
+            catch (Exception e)
+            {
+                // Are expecting an exception here though!
+                Assert.IsTrue(e.Message.Equals(
+                    "Expected teamsCount and cluesCount to be equal. Instead teamsCount=3 and cluesCount=2"));
+                return;
+            }
+            // If no exception was thrown this test is failed
+            Assert.Fail("Expected exception to be thrown");
         }
 
         private List<List<string>> GetSmallTeam()
