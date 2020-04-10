@@ -67,7 +67,8 @@ namespace ImageClueAPI.Controllers
         [HttpGet("sendsms/{teamslist}/{clues}")]
         public ActionResult<string> SendSMS(string teamslist, string clues)
         {
-            List<List<string>> teams = JsonConvert.DeserializeObject<List<List<string>>>(teamslist);
+            List<List<Tuple<string, string>>> teams = 
+                JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
             List<Clue> cluesList = JsonConvert.DeserializeObject<List<Clue>>(clues);
             return JsonConvert.SerializeObject(PairAndImagesLibraryMain.SendSMS(teams, cluesList));
         }

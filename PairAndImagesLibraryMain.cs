@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace PairAndImagesLibrary
 {
@@ -79,12 +81,26 @@ namespace PairAndImagesLibrary
             return uniqueAdjectives.ToList();
         }
 
-        public static bool SendSMS(List<List<string>> teams, List<Clue> cluesList)
+        public static bool SendSMS(List<List<Tuple<string, string>>> teams, List<Clue> cluesList)
         {
             // check list of teams and clues is the same length
+            CheckTeamsAndCluesLength(teams.Count, cluesList.Count);
+
             // for each team/clue
-            // for each team member in that team
-            // send an SMS containing the clue, using Twillo API
+            for (int teamIndex = 0; teamIndex < teams.Count; teamIndex++)
+            {
+                // for each team member in that team
+                List<Tuple<string, string>> currentTeamPlayers = teams[teamIndex];
+                Clue currentClue = cluesList[teamIndex];
+
+                foreach (Tuple<string, string> currentPlayer in currentTeamPlayers)
+                {
+                    // send an SMS containing the clue, using Twillo API
+                    SendTwilioSMS(currentPlayer, currentClue);
+                }
+
+            }
+
             return false;
         }
 
@@ -98,8 +114,20 @@ namespace PairAndImagesLibrary
             }
         }
 
-        private static bool SendTwilioSMS(List<string> teamMemebers, string clue)
+        public static bool SendTwilioSMS(Tuple<string, string> teamMember, Clue clue)
         {
+            const string accountSid = "AC944080b9808a962a5b6e0e4f3bd2b198";
+            const string authToken = "33101919863d8ec5552f18ebfc276b1a";
+
+            TwilioClient.Init(accountSid, authToken);
+            MessageResource message = MessageResource.Create(
+                body: string.Format("Hello {0}, from the Image Clue game. {1}.", teamMember.Item1, clue.ToString()),
+                from: new Twilio.Types.PhoneNumber("+12566078498"),
+                to: new Twilio.Types.PhoneNumber(teamMember.Item2)
+            );
+
+            Console.WriteLine(message.Sid);
+
             return false;
         }
 

@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PairAndImagesLibrary;
 using System;
 using System.Collections.Generic;
+using Twilio.Exceptions;
 
 namespace PairAndImagesGameTest
 {
@@ -124,6 +125,33 @@ namespace PairAndImagesGameTest
             }
             // If no exception was thrown this test is failed
             Assert.Fail("Expected exception to be thrown");
+        }
+
+        [TestMethod]
+        public void SendTwilioSMSTestSuccess()
+        {
+            bool result = PairAndImagesLibraryMain.SendTwilioSMS(
+                new Tuple<string, string>("Paul", "+447986869466"), new Clue("randy", "nun"));
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void SendTwilioSMSTestFailure()
+        {
+            try
+            {
+                bool result = PairAndImagesLibraryMain.SendTwilioSMS(
+                    new Tuple<string, string>("Paul", "+4472618"), new Clue("randy", "nun"));
+            }
+            catch (ApiException e)
+            {
+                // We expected this exception
+                Assert.IsTrue(e.Message.Contains("not a valid phone number"));
+                return;
+            }
+
+            // If we reach this stage, fail the test
+            Assert.Fail("Expected an exception as the phone number was invalid");
         }
 
         private List<List<string>> GetSmallTeam()
