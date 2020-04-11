@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using PairAndImagesLibrary;
 using System;
 using System.Collections.Generic;
+using Twilio.Exceptions;
 
 namespace ImageClueAPITest
 {
@@ -40,11 +41,21 @@ namespace ImageClueAPITest
         [TestMethod]
         public void TestSendSMS()
         {
-            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]]";
-            string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"},{\"Adjective\":\"confused\",\"Noun\":\"French chef\"}]";
-            ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson, cluesJson);
-            bool outcome = JsonConvert.DeserializeObject<bool>(result.Value);
-            Assert.IsTrue(outcome);
+            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}]]";
+            string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"}]";
+            try
+            {
+                ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson, cluesJson);
+            }
+            catch (ApiException e)
+            {
+                // Expect to receive an auth exception, as we have no way to set the environment
+                // variable privately in github
+                Assert.IsTrue(e.Message.Contains("TWILIO_AUTH"));
+                return;
+            }
+            // Expect to get an exception, so fail if not
+            Assert.Fail("Expected exception");
         }
     }
 }

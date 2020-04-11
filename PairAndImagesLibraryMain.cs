@@ -117,7 +117,11 @@ namespace PairAndImagesLibrary
         public static bool SendTwilioSMS(Tuple<string, string> teamMember, Clue clue)
         {
             const string accountSid = "AC944080b9808a962a5b6e0e4f3bd2b198";
-            const string authToken = "33101919863d8ec5552f18ebfc276b1a";
+            string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH");
+            if (string.IsNullOrWhiteSpace(authToken))
+            {
+                throw new ApiException("No Auth token defined for Twilio - TWILIO_AUTH");
+            }
 
             TwilioClient.Init(accountSid, authToken);
             MessageResource message = MessageResource.Create(
