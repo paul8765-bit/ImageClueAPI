@@ -14,10 +14,10 @@ namespace ImageClueAPITest
         [TestMethod]
         public void TestGetTeams()
         {
-            string team1 = "paul|chris|emily|ben";
+            string team1 = "[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]";
             ActionResult<string> result = new ImageClueAPIController(null).GetTeams(team1);
             string teamsString = result.Value;
-            List<List<string>> teams = JsonConvert.DeserializeObject<List<List<string>>>(teamsString);
+            List<List<Tuple<string, string>>> teams = JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamsString);
             Assert.AreEqual(2, teams.Count);
             Assert.AreEqual(2, teams[0].Count);
             Assert.AreEqual(2, teams[1].Count);
@@ -26,7 +26,7 @@ namespace ImageClueAPITest
         [TestMethod]
         public void TestGetClues()
         {
-            string team1Json = "[[\"paul\",\"emily\"],[\"chris\",\"ben\"]]";
+            string team1Json = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]]";
             ActionResult<string> result = new ImageClueAPIController(null).GetClues(team1Json);
             string cluesString = result.Value;
             List<Clue> clues = JsonConvert.DeserializeObject<List<Clue>>(cluesString);
@@ -40,7 +40,7 @@ namespace ImageClueAPITest
         [TestMethod]
         public void TestSendSMS()
         {
-            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"+447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"+447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"+447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"+447986869466\"}]]";
+            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]]";
             string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"},{\"Adjective\":\"confused\",\"Noun\":\"French chef\"}]";
             ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson, cluesJson);
             bool outcome = JsonConvert.DeserializeObject<bool>(result.Value);

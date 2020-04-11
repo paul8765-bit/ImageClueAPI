@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Twilio;
+using Twilio.Exceptions;
 using Twilio.Rest.Api.V2010.Account;
 
 namespace PairAndImagesLibrary
@@ -17,38 +18,38 @@ namespace PairAndImagesLibrary
             return output;
         }
 
-        public static List<List<string>> GetTeams(List<string> players)
+        public static List<List<Tuple<string, string>>> GetTeams(List<Tuple<string, string>> playersAndPhoneNumbers)
         {
             // If 4 players, 2 teams of 2
             // If 5 players, 1 team of 2, 1 team of 3
             // If 6 players, 3 teams of 2
             // If 7 players, 2 teams of 2, 1 team of 3
             // If 8 players, 4 teams of 2
-            int numberOfTeams = players.Count / 2;
-            List<List<string>> teams = InitialiseTeamsArray(numberOfTeams);
+            int numberOfTeams = playersAndPhoneNumbers.Count / 2;
+            List<List<Tuple<string, string>>> teams = InitialiseTeamsArray(numberOfTeams);
 
             // Now cycle through the names and assign each to a team
-            for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
+            for (int playerIndex = 0; playerIndex < playersAndPhoneNumbers.Count; playerIndex++)
             {
                 int teamToAllocateTo = playerIndex % numberOfTeams;
-                teams[teamToAllocateTo].Add(players[playerIndex]);
+                teams[teamToAllocateTo].Add(playersAndPhoneNumbers[playerIndex]);
             }
 
             return teams;
         }
 
-        private static List<List<string>> InitialiseTeamsArray(int numberOfTeams)
+        private static List<List<Tuple<string, string>>> InitialiseTeamsArray(int numberOfTeams)
         {
-            List<List<string>> teams = new List<List<string>>(numberOfTeams);
+            List<List<Tuple<string, string>>> teams = new List<List<Tuple<string, string>>>(numberOfTeams);
             for (int teamIndex = 0; teamIndex < numberOfTeams; teamIndex++)
             {
                 // init capacity is 3 as each team will be either 2 or 3 players
-                teams.Add(new List<string>(3));
+                teams.Add(new List<Tuple<string, string>>(3));
             }
             return teams;
         }
 
-        public static List<Clue> GetClues(List<List<string>> teams)
+        public static List<Clue> GetClues(List<List<Tuple<string, string>>> teams)
         {
             string sharedNoun = GetRandomNoun();
             List<string> adjectivePerTeam = GetAdjectivePerTeam(teams.Count);
@@ -98,10 +99,9 @@ namespace PairAndImagesLibrary
                     // send an SMS containing the clue, using Twillo API
                     SendTwilioSMS(currentPlayer, currentClue);
                 }
-
             }
 
-            return false;
+            return true;
         }
 
         public static void CheckTeamsAndCluesLength(int teamsCount, int cluesCount)
@@ -123,12 +123,26 @@ namespace PairAndImagesLibrary
             MessageResource message = MessageResource.Create(
                 body: string.Format("Hello {0}, from the Image Clue game. {1}.", teamMember.Item1, clue.ToString()),
                 from: new Twilio.Types.PhoneNumber("+12566078498"),
-                to: new Twilio.Types.PhoneNumber(teamMember.Item2)
+                to: new Twilio.Types.PhoneNumber(FormatPhoneNumber(teamMember.Item2))
             );
 
-            Console.WriteLine(message.Sid);
+            if (message.ErrorCode != null)
+            {
+                throw new ApiException(message.ErrorCode + message.ErrorMessage);
+            }
+            return true;
+        }
 
-            return false;
+        public static string FormatPhoneNumber(string number)
+        {
+            if (!number.StartsWith("+"))
+            {
+                return "+" + number;
+            }
+            else
+            {
+                return number;
+            }
         }
 
         private static string GetRandomNoun()
