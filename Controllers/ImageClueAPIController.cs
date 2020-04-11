@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -33,14 +32,15 @@ namespace ImageClueAPI.Controllers
         [HttpGet("getteams/{playerlist}")]
         public ActionResult<string> GetTeams(string playerlist)
         {
-            string[] playerlistArray = playerlist.Split("|");
-            return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetTeams(playerlistArray.ToList()));
+            List<Tuple<string, string>> playersAndPhoneNumbers = 
+                JsonConvert.DeserializeObject<List<Tuple<string, string>>>(playerlist);
+            return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetTeams(playersAndPhoneNumbers));
         }
 
         [HttpGet("getclues/{teamslist}")]
         public ActionResult<string> GetClues(string teamslist)
         {
-            List<List<string>> teams = JsonConvert.DeserializeObject<List<List<string>>>(teamslist);
+            List<List<Tuple<string, string>>> teams = JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
             return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetClues(teams));
         }
 
@@ -48,20 +48,30 @@ namespace ImageClueAPI.Controllers
         public ActionResult<string> GetTeamsVerbose(string playerlist)
         {
             StringBuilder output = new StringBuilder();
-            string[] playerlistArray = playerlist.Split("|");
-            List<List<string>> teams = PairAndImagesLibraryMain.GetTeams(playerlistArray.ToList());
+            List<Tuple<string, string>> playersAndPhoneNumbers =
+                JsonConvert.DeserializeObject<List<Tuple<string, string>>>(playerlist);
+            List<List<Tuple<string, string>>> teams = PairAndImagesLibraryMain.GetTeams(playersAndPhoneNumbers);
             output.Append(string.Format("Successfully allocated players across {0} teams", teams.Count));
             for (int teamIndex = 0; teamIndex < teams.Count; teamIndex++)
             {
-                List<string> currentTeam = teams[teamIndex];
+                List<Tuple<string, string>> currentTeam = teams[teamIndex];
                 output.Append(string.Format("{0} Team {1} has {2} people",
                     Environment.NewLine, teamIndex + 1, currentTeam.Count));
-                foreach (string currentTeamMember in currentTeam)
+                foreach (Tuple<string, string> currentTeamMember in currentTeam)
                 {
-                    output.Append(string.Format("{0}    {1}", Environment.NewLine, currentTeamMember));
+                    output.Append(string.Format("{0}    {1}", Environment.NewLine, currentTeamMember.Item1));
                 }
             }
             return output.ToString();
+        }
+
+        [HttpGet("sendsms/{teamslist}/{clues}")]
+        public ActionResult<string> SendSMS(string teamslist, string clues)
+        {
+            List<List<Tuple<string, string>>> teams = 
+                JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
+            List<Clue> cluesList = JsonConvert.DeserializeObject<List<Clue>>(clues);
+            return JsonConvert.SerializeObject(PairAndImagesLibraryMain.SendSMS(teams, cluesList));
         }
     }
 }
