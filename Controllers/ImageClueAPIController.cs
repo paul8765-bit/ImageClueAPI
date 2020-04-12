@@ -65,9 +65,12 @@ namespace ImageClueAPI.Controllers
             return output.ToString();
         }
 
-        [HttpGet("sendsms/{teamslist}/{clues}")]
-        public ActionResult<string> SendSMS(string teamslist, string clues)
+        [HttpGet("sendsms/{teamslistandclues}")]
+        public ActionResult<string> SendSMS(string teamslistandclues)
         {
+            string[] teamsAndCluesSplit = teamslistandclues.Split("|");
+            string teamslist = teamsAndCluesSplit[0];
+            string clues = teamsAndCluesSplit[1];
             List<List<Tuple<string, string>>> teams = 
                 JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
             List<Clue> cluesList = JsonConvert.DeserializeObject<List<Clue>>(clues);

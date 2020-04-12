@@ -45,7 +45,7 @@ namespace ImageClueAPITest
             string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"}]";
             try
             {
-                ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson, cluesJson);
+                ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson + "|" + cluesJson);
             }
             catch (ApiException e)
             {
