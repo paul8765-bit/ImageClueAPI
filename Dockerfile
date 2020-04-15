@@ -27,4 +27,5 @@ COPY --from=publish /app/publish .
 # Copy the certs
 RUN mkdir https
 COPY aspnetapp_localhost.pfx /https/
+COPY imageclue.pfx /https/
 ENTRYPOINT ["dotnet", "ImageClueAPI.dll"]
