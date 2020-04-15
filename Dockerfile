@@ -7,6 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
+
 COPY ["ImageClueAPI.csproj", ""]
 RUN dotnet restore ImageClueAPI.csproj
 COPY . .
@@ -22,4 +23,8 @@ RUN dotnet test --verbosity normal
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Copy the certs
+RUN mkdir https
+COPY aspnetapp_localhost.pfx /https/
 ENTRYPOINT ["dotnet", "ImageClueAPI.dll"]
