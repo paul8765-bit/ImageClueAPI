@@ -25,6 +25,15 @@ namespace ImageClueAPITest
         }
 
         [TestMethod]
+        public void TestGetTeamsInvalid()
+        {
+            string team1 = "[{\"Item1\":\"paul,\"Item2\":\"447986869466\"},{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]";
+            ActionResult<string> result = new ImageClueAPIController(null).GetTeams(team1);
+            string errorString = result.Value;
+            Assert.IsTrue(errorString.Contains("After parsing a value an unexpected character was encountered"));
+        }
+
+        [TestMethod]
         public void TestGetClues()
         {
             string team1Json = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]]";
@@ -39,23 +48,22 @@ namespace ImageClueAPITest
         }
 
         [TestMethod]
+        public void TestGetCluesInvalid()
+        {
+            string team1Json = "[[{\"Item1:\"paul\",\"Item2\":\"447986869466\"}],[{\"Item1\":\"chris\",\"Item2\":\"447986869466\"},{\"Item1\":\"ben\",\"Item2\":\"447986869466\"}]]";
+            ActionResult<string> result = new ImageClueAPIController(null).GetClues(team1Json);
+            string errorString = result.Value;
+            Assert.IsTrue(errorString.Contains("Invalid character after parsing property name"));
+        }
+
+        [TestMethod]
         public void TestSendSMS()
         {
-            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"},{\"Item1\":\"emily\",\"Item2\":\"447986869466\"}]]";
+            string teamJson = "[[{\"Item1\":\"paul\",\"Item2\":\"447986869466\"}]]";
             string cluesJson = "[{\"Adjective\":\"cocky\",\"Noun\":\"French chef\"}]";
-            try
-            {
-                ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson + "|" + cluesJson);
-            }
-            catch (ApiException e)
-            {
-                // Expect to receive an auth exception, as we have no way to set the environment
-                // variable privately in github
-                Assert.IsTrue(e.Message.Contains("TWILIO_AUTH"));
-                return;
-            }
-            // Expect to get an exception, so fail if not
-            Assert.Fail("Expected exception");
+            ActionResult<string> result = new ImageClueAPIController(null).SendSMS(teamJson + "|" + cluesJson);
+            string errorMessage = result.Value;
+            Assert.IsTrue(errorMessage.Contains("TWILIO_AUTH"));
         }
     }
 }
