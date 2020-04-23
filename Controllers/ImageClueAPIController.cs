@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -44,13 +43,12 @@ namespace ImageClueAPI.Controllers
             }
         }
 
-        [HttpGet("getclues/{teamslist}")]
-        public ActionResult<string> GetClues(string teamslist)
+        [HttpGet("getteamsdetails/{teamID}")]
+        public ActionResult<string> GetTeamsDetails(int teamID)
         {
             try
             {
-                List<List<Tuple<string, string>>> teams = JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
-                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetClues(teams));
+                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetTeamsDetails(teamID));
             }
             catch (Exception e)
             {
@@ -58,18 +56,38 @@ namespace ImageClueAPI.Controllers
             }
         }
 
-        [HttpGet("sendsms/{teamslistandclues}")]
-        public ActionResult<string> SendSMS(string teamslistandclues)
+        [HttpGet("getclues/{teamID}")]
+        public ActionResult<string> GetClues(int teamID)
         {
             try
             {
-                string[] teamsAndCluesSplit = teamslistandclues.Split("|");
-                string teamslist = teamsAndCluesSplit[0];
-                string clues = teamsAndCluesSplit[1];
-                List<List<Tuple<string, string>>> teams =
-                    JsonConvert.DeserializeObject<List<List<Tuple<string, string>>>>(teamslist);
-                List<Clue> cluesList = JsonConvert.DeserializeObject<List<Clue>>(clues);
-                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.SendSMS(teams, cluesList));
+                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetClues(teamID));
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        [HttpGet("getcluesdetails/{cluesID}")]
+        public ActionResult<string> GetCluesDetails(int cluesID)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.GetCluesDetails(cluesID));
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        [HttpGet("sendsms/{teamsid}/{cluesid}")]
+        public ActionResult<string> SendSMS(int teamsid, int cluesid)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(PairAndImagesLibraryMain.SendSMS(teamsid, cluesid));
             }
             catch (Exception e)
             {
