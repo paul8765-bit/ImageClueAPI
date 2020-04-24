@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClueAPI", "ImageClueAPI.csproj", "{F55656AE-F9DA-447E-9730-3420677B646F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageClueAPI", "ImageClueAPI.csproj", "{F55656AE-F9DA-447E-9730-3420677B646F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageClueAPITest", "ImageClueAPITest\ImageClueAPITest.csproj", "{F4EA653F-C669-4FE2-852B-B9B6B46EF384}"
 EndProject
